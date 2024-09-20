@@ -1,11 +1,16 @@
 class House:
-    houses_history = []  # Атрибут класса для хранения названий созданных объектов
+    houses_history = []  # хранит названия созданных объектов
+
+    @classmethod
+    def new(cls, name, number_of_floors):
+        """Создает новый экземпляр House и добавляет его в историю."""
+        instance = cls(name, number_of_floors)
+        cls.houses_history.append(instance.name)
+        return instance
 
     def __init__(self, name, number_of_floors):
         self.name = name
         self.number_of_floors = number_of_floors
-        # Добавляем название здания в историю при создании объекта
-        House.houses_history.append(self.name)
 
     def go_to(self, new_floor):
         if new_floor < 1 or new_floor > self.number_of_floors:
@@ -64,16 +69,16 @@ class House:
     def __del__(self):
         print(f"{self.name} снесён,но он останется в истории")
 
-# Пример использования
-h1 = House('ЖК Эльбрус', 10)
+# Пример
+h1 = House.new('ЖК Эльбрус', 10)
 print(House.houses_history)  # Проверка истории
-h2 = House('ЖК Акация', 20)
+h2 = House.new('ЖК Акация', 20)
 print(House.houses_history)  # Проверка истории
-h3 = House('ЖК Матрёшки', 20)
+h3 = House.new('ЖК Матрёшки', 20)
 print(House.houses_history)  # Проверка истории
 
 # Удаление объектов
 del h2
 del h3
 
-print(House.houses_history)  # Проверка истории после удаления
+print(House.houses_history)
